@@ -1,0 +1,35 @@
+Description: fix crash with glibproxyresolver
+ Bug leads to crash of Gajim on startup for some users.
+Author: Sebastian Reichel <sre@debian.org>
+Origin: vendor
+Bug: https://github.com/libproxy/libproxy/issues/199
+Bug-Debian: https://bugs.debian.org/1028638
+Last-Update: 2023-01-25
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/libproxy/modules/config_envvar.cpp
++++ b/libproxy/modules/config_envvar.cpp
+@@ -26,12 +26,10 @@
+ public:
+ 	vector<url> get_config(const url &dst) {
+ 		const char *proxy = NULL;
+-                vector<url> response;
+ 
+ 		// If _PX_DEBUG_PACURL is set, use it as the PAC URL.
+ 		if (proxy = getenv("_PX_DEBUG_PACURL")) {
+-			response.push_back(url(string("pac+") + proxy));
+-			return response;
++			return std::vector<url> { url(string("pac+") + proxy) };
+ 		}
+ 
+ 		// If the URL is an ftp url, try to read the ftp proxy
+@@ -55,8 +53,7 @@
+ 		if (!proxy)
+ 			throw runtime_error("Unable to read configuration");
+ 
+-                response.push_back(url(proxy));
+-		return response;
++		return std::vector<url> { url(proxy) };
+ 	}
+ 
+ 	string get_ignore(const url&) {
