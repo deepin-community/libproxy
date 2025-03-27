@@ -5,13 +5,11 @@
 set -eux
 set -o pipefail
 
-export _MM_DEBUG=1
-export _PX_DEBUG=1
+#export PX_DEBUG=1
 
 reset () {
-    unset DESKTOP_SESSION
+    unset XDG_CURRENT_DESKTOP
     unset FTP_PROXY
-    unset GNOME_DESKTOP_SESSION_ID
     unset GSETTINGS_BACKEND
     unset HTTPS_PROXY
     unset HTTP_PROXY
@@ -24,7 +22,7 @@ reset () {
 }
 
 reset
-export DESKTOP_SESSION=gnome
+export XDG_CURRENT_DESKTOP=GNOME
 export GSETTINGS_BACKEND=keyfile
 export XDG_CONFIG_HOME="$AUTOPKGTEST_TMP/config"
 mkdir -p "$XDG_CONFIG_HOME/glib-2.0/settings"
@@ -53,13 +51,13 @@ port=8000
 EOF
 
 answer="$(proxy http://example.com)"
-test "${answer}" = "http://proxy.example.net:8000 socks://socksproxy.example.net:8000"
+test "${answer}" = "http://proxy.example.net:8000"
 
 answer="$(proxy https://example.com)"
-test "${answer}" = "http://sslproxy.example.net:8000 socks://socksproxy.example.net:8000"
+test "${answer}" = "http://sslproxy.example.net:8000"
 
 answer="$(proxy ftp://ftp.example.com)"
-test "${answer}" = "http://ftpproxy.example.net:8000 socks://socksproxy.example.net:8000"
+test "${answer}" = "http://ftpproxy.example.net:8000"
 
 answer="$(proxy http://localhost)"
 test "${answer}" = direct://

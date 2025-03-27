@@ -1,8 +1,134 @@
-libproxy (0.4.18-1.2deepin0) unstable; urgency=medium
+libproxy (0.5.9-1) unstable; urgency=medium
 
-  * No source change upload against GCC 12.
+  * New upstream release
 
- -- Tianyu Chen <sweetyfish@deepin.org>  Fri, 20 Sep 2024 12:11:19 +0800
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Thu, 17 Oct 2024 12:55:29 -0400
+
+libproxy (0.5.8-1) unstable; urgency=medium
+
+  * New upstream release
+  * autopkgtest: Update pac test for changed behavior in new release
+  * Bump Standards Version to 4.7.0
+
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Fri, 09 Aug 2024 15:32:00 -0400
+
+libproxy (0.5.7-1) unstable; urgency=medium
+
+  * New upstream release
+  * Drop debian/docs since CHANGELOG.md is no longer provided
+
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Thu, 11 Jul 2024 07:01:37 -0400
+
+libproxy (0.5.6-1) unstable; urgency=medium
+
+  * New upstream release
+  * Drop all patches: applied in new release
+  * Update debian/libproxy1v5.symbols
+
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Wed, 01 May 2024 16:56:30 -0400
+
+libproxy (0.5.4-4) unstable; urgency=medium
+
+  * Revert 32-bit architecture bootstrapping
+
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Fri, 29 Mar 2024 09:37:57 -0400
+
+libproxy (0.5.4-3) unstable; urgency=medium
+
+  * Set DPKG_GENSYMBOLS_CHECK_LEVEL to 0 with stage1 bootstrapping
+  * Set stage1 profile for 32-bit architectures for time_t bootstrapping
+
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Wed, 13 Mar 2024 11:36:38 -0400
+
+libproxy (0.5.4-2) unstable; urgency=medium
+
+  * Team upload
+  * d/control: Add back transitional packages for the plugins.
+    These provide smooth upgrades from Debian 12 and Ubuntu 22.04, and
+    should be removed after Debian 13 and Ubuntu 24.04 are released.
+    (Closes: #1064889)
+  * d/tests/libproxy-tools: Don't depend on gsettings-desktop-schemas here.
+    The autopkgtest should prove that the minimum dependencies are
+    sufficient to run without crashing in a non-GNOME environment,
+    which we can ensure by making one test not depend on g-s-d.
+  * d/python3-libproxy.install: Remove obsolete packaging file
+  * d/p/tests-Copy-pxProxyFactory-correctly.patch,
+    d/p/px_proxy_factory_copy-Add-a-new-reference-to-the-manager.patch,
+    d/p/tests-Don-t-leak-the-copied-pxProxyFactory.patch:
+    Add proposed patches to fix internal PxManager refcounting
+  * d/libproxy1v5.lintian-overrides: Silence library-not-linked-against-libc.
+    libproxy links to GLib, and to a backend library that does the real
+    work, so it genuinely does not have any direct dependency on libc
+    and this is non-problematic.
+
+ -- Simon McVittie <smcv@debian.org>  Tue, 27 Feb 2024 12:53:32 +0000
+
+libproxy (0.5.4-1) unstable; urgency=medium
+
+  * New upstream release
+  * Drop all patches: applied in new release
+  * Update symbols
+  * Update autopkgtest
+  * Rename webkit autopkgtest to pac
+  * Release to unstable
+
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Mon, 26 Feb 2024 19:30:12 -0500
+
+libproxy (0.5.3-2) experimental; urgency=medium
+
+  * debian/tests:
+    - Depends on gsettings-desktop-schemas, the gnome backend errors out
+      if there is no schemas installed
+    - use XDG_CURRENT_DESKTOP instead of DESKTOP_SESSION
+
+ -- Sebastien Bacher <seb128@ubuntu.com>  Thu, 15 Feb 2024 11:53:41 +0100
+
+libproxy (0.5.3-1) experimental; urgency=medium
+
+  * New upstream release
+    - Complete rewrite using C instead of C++
+    - Plugins are no longer an option
+  * Switch from cmake to meson
+  * Drop plugin packages
+  * Enable duktape PAC runner as replacement for webkitgtk version
+    which is no longer provided
+  * Build-Depend on libcurl4-gnutls-dev
+  * Build-Depend on gsettings-desktop-schemas-dev & valac
+  * Temporarily don't build gobject-introspection & docs
+    to avoid trip through NEW. This also temporarily disables the unused
+    vala support
+  * Switch debian/copyright to 1.0 format
+  * Add symbols file
+  * Set Rules-Requires-Root: no
+  * debian/libproxy1v5.install: Install libpxbackend-1.0.so
+  * debian/libproxy-dev.install: Drop obsolete CMake module
+  * debian/docs: NEWS → CHANGELOG.md
+  * debian/libproxy-tools.manpages: Install upstream manpage
+  * Drop obsolete debian/not-installed
+  * Drop obsolete python autopkgtests (Closes: #1062373)
+  * Drop all patches: either obsolete or applied in new release
+  * Cherry-pick 2 patches
+
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Thu, 08 Feb 2024 15:02:23 -0500
+
+libproxy (0.4.18-2) unstable; urgency=medium
+
+  [ Jeremy Bícha ]
+  * Add debian/upstream/metadata
+  * debian/rules: Explicitly disable duktape PAC runner for now
+  * d/p/Fix-building-without-duktape.patch:
+    Add patch to fix a build failure when duktape is disabled
+  * Add patch from Fedora to switch from webkit2gtk 4.0 to 4.1
+  * Update Build-Depends
+  * Stop using debian/control.in and dh_gnome_clean
+  * Stop building python3-libproxy since it is unused in Debian Testing
+    and is no longer provided by libproxy 0.5
+  * Update standards version to 4.6.2, no changes needed
+
+  [ Simon McVittie ]
+  * Acknowledge NMU (Closes: #1028638)
+
+ -- Jeremy Bícha <jbicha@ubuntu.com>  Thu, 25 Jan 2024 10:55:12 -0500
 
 libproxy (0.4.18-1.2) unstable; urgency=medium
 

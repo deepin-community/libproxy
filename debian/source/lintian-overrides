@@ -1,0 +1,2 @@
+# NPL-1.1 is an extension of MPL-1.1 so we need to include the MPL-1.1 text
+libproxy source: unused-license-paragraph-in-dep5-copyright mpl-1.1 [debian/copyright:*]
