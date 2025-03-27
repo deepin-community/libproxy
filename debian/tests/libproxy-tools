@@ -5,8 +5,7 @@
 set -eux
 set -o pipefail
 
-export _MM_DEBUG=1
-export _PX_DEBUG=1
+#export PX_DEBUG=1
 
 reset () {
     unset DESKTOP_SESSION

@@ -1,1 +1,2 @@
 usr/lib/*/libproxy.so.*
+usr/lib/*/libproxy/libpxbackend-1.0.so

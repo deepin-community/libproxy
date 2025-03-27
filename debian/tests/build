@@ -25,7 +25,8 @@ int main(int argc, char** argv) {
 }
 EOF
 
-"${CROSS_COMPILE}gcc" -o build_test build_test.c -lproxy
+arch_triplet="$("${CROSS_COMPILE}gcc" --print-multiarch)"
+"${CROSS_COMPILE}gcc" -o build_test build_test.c -I/usr/include/glib-2.0 -I/usr/lib/"$arch_triplet"/glib-2.0/include -I/usr/include/libproxy -lproxy
 echo "build (legacy): OK"
 [ -x build_test ]
 ./build_test
